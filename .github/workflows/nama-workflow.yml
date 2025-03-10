@@ -1,0 +1,26 @@
+name: Jalankan Program Otomatis
+
+on:
+  push:
+    branches:
+      - main  # Workflow berjalan setiap ada perubahan di branch "main"
+  schedule:
+    - cron: '0 0 * * *'  # Menjalankan setiap hari pada pukul 00:00 UTC
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # Menjalankan di mesin virtual Ubuntu
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4  # Mengambil kode dari repo
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Menggunakan Python versi terbaru
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt  # Install dependencies jika ada
+
+      - name: Jalankan Skrip
+        run: python main.py  # Menjalankan file Python utama
